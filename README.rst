@@ -2,13 +2,13 @@ Random names generator, which uses seed of input words to pseudo-randomly combin
 
 This is usable for names of new projects, which you may just describe in plain words (each word on new line) and it will generate combined pseudo-similar names.
 
-`example.txt` ::
+``example.txt`` ::
 
     random
     names
     generator
 
-`$ ./random_names_generator.py example.txt -n 3` ::
+``$ ./random_names_generator.py example.txt -n 3`` ::
 
     arandmer
     memeomand
@@ -18,6 +18,7 @@ Help
 ----
 
 ::
+
     usage: random_names_generator.py [-h] [-n NUMBER] SEED_FILE
 
     Mix random names from word seeds.
