@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 #
 # Imports =====================================================================
+import sys
 import random
 
 
@@ -11,6 +12,9 @@ VOWELS = list("aeiouáéíóúůyý")
 
 # Functions & classes =========================================================
 def get_words(filename):
+    if filename == "-":
+        return sys.stdin.read().splitlines()
+
     with open(filename) as f:
         return f.read().splitlines()
 
@@ -104,15 +108,17 @@ def mix(words, num):
         if not is_bad(x)
     ]
 
-    return [
-        random.choice(candidates)
-        for _ in range(num)
-    ]
+    output = set()
+    while len(output) < num:
+        output.add(
+            random.choice(candidates)
+        )
+
+    return output
 
 
 # Main program ================================================================
 if __name__ == '__main__':
-    import sys
     import os.path
     import argparse
 
@@ -120,8 +126,15 @@ if __name__ == '__main__':
         description="Mix random names from word seeds."
     )
     parser.add_argument(
+        "-n",
+        "--number",
+        type=int,
+        default=20,
+        help="Number of generated words. Default 20.",
+    )
+    parser.add_argument(
         "SEED_FILE",
-        help="File with list of seed words.",
+        help="File with list of seed words. Use - for stdin.",
     )
     args = parser.parse_args()
 
@@ -131,5 +144,5 @@ if __name__ == '__main__':
 
     words = get_words(args.SEED_FILE)
 
-    for x in mix(words, 20):
+    for x in mix(words, args.number):
         print(x)
